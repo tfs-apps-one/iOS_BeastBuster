@@ -18,40 +18,38 @@ struct ContentView: View {
     @State var button_2_text = "PLAY"
     
     @State var sound_1_text = "通常音: 鈴音1"
-    @State var sound_1_select_value = 0
+    @State var sound_1_select_value:Int = SettingsManager.shared.normalSoundSelection
     var sound_1_select_moji = [
         "通常音: 鈴音1","通常音: 鈴音2","通常音: 鈴音3",
         "通常音: 雷鳴1","通常音: 雷鳴2","通常音: 雷鳴3",
         "通常音: ラジオ","通常音: 爆竹"]
 
-    @State var light_1_text = "ライト"
-    @State var light_1_select_value = 0
-    var light_1_select_moji = ["消灯","点滅","常灯"]
+    @State var interval_text = "再生間隔"
+    @State var interval_select_value:Int = SettingsManager.shared.playbackInterval
+    var interval_select_moji = ["間隔: 0秒", "間隔: 5秒","間隔: 10秒","間隔: 15秒","ランダム"]
 
     @State var sound_2_text = "緊急音: 雷鳴1"
-    @State var sound_2_select_value = 3
+    @State var sound_2_select_value:Int = SettingsManager.shared.emergencySoundSelection
     var sound_2_select_moji = [
         "緊急音: 鈴音1","緊急音: 鈴音2","緊急音: 鈴音3",
         "緊急音: 雷鳴1","緊急音: 雷鳴2","緊急音: 雷鳴3",
         "緊急音: ラジオ","緊急音: 爆竹"]
 
     @State var light_2_text = "OFF"
-    @State var light_2_select_value = 0
+    @State var light_2_select_value:Int = SettingsManager.shared.lightBlinkingSetting
     var light_2_select_moji = ["OFF","ON(点滅)"]
 
-    @State var SoundVolume:Double = 3
-    
+    @State private var SoundVolume:Double = SettingsManager.shared.volumeSetting
+
     //音声プレイヤー
     @State private var audioPlayer: AVAudioPlayer?
     @State private var audioPlayer_emer: AVAudioPlayer?
-    
     //ライト
     @State private var isLightOn: Bool = false // ライトの状態を管理
     @State private var isBlinking: Bool = false // 点滅中かどうかを管理
     @State private var blinkTimer: Timer? // 点滅のためのタイマーを管理
+    @State private var SoundContinueTimer: Timer?   //連続再生のためのタイマーを管理
     
-    
-
     /*------------------------------------------------------
         メイン画面
      ------------------------------------------------------*/
@@ -138,23 +136,37 @@ struct ContentView: View {
                         }
                     }
                     Spacer()
-                    /*
-                    Image(systemName: "lightbulb.fill")
+                    
+                    Image(systemName: "clock.fill")
                         .font(.title2)
                     
-                    Menu(light_1_text) {
-                        Button(light_1_select_moji[0]) {
-                            SelectLight_1_Press(index:0)
+                    Menu(interval_text) {
+                        Button(interval_select_moji[0]) {
+                            SelectIntervalPress(index:0)
                         }
-                        Button(light_1_select_moji[1]) {
-                            SelectLight_1_Press(index:1)
+                        Button(interval_select_moji[1]) {
+                            SelectIntervalPress(index:1)
                         }
-                        Button(light_1_select_moji[2]) {
-                            SelectLight_1_Press(index:2)
+                        Button(interval_select_moji[2]) {
+                            SelectIntervalPress(index:2)
                         }
+                        Button(interval_select_moji[3]) {
+                            SelectIntervalPress(index:3)
+                        }
+                        Button(interval_select_moji[4]) {
+                            SelectIntervalPress(index:4)
+                        }
+                        /*
+                        Button(interval_select_moji[5]) {
+                            SelectIntervalPress(index:5)
+                        }
+                        Button(interval_select_moji[6]) {
+                            SelectIntervalPress(index:6)
+                        }
+                        */
                     }
                     .padding(.trailing, 10) // 右端から10pxの余白
-                     */
+                    
                 }
                 .foregroundColor((isEmerAct || isBellAct) ? .gray : .blue)
                 .bold()
@@ -257,7 +269,7 @@ struct ContentView: View {
                     }
                     .padding()
                     .onChange(of: SoundVolume){ _ in
-                     setVolumeLevel(level: Float(SoundVolume))
+                        setVolumeLevel(level: Float(SoundVolume))
                      }
                 }
 //                .onChange(of: SoundVolume){ _ in
@@ -271,6 +283,7 @@ struct ContentView: View {
             Spacer()
         }
         .onAppear(){
+            DataManegerLoading()
             setStatusArea()
         }
     }
@@ -283,6 +296,11 @@ struct ContentView: View {
         else {
             status_text = "通常音 or 緊急音を選択して「PLAY」をタップして下さい。"
         }
+        
+        sound_1_text = sound_1_select_moji[sound_1_select_value]
+        interval_text = interval_select_moji[interval_select_value]
+        sound_2_text = sound_2_select_moji[sound_2_select_value]
+        light_2_text = light_2_select_moji[light_2_select_value]
     }
     
     
@@ -291,14 +309,14 @@ struct ContentView: View {
      ------------------------------------------------------*/
     //再生ボタン処理
     func Button_1_Press(){
-        if audioPlayer == nil || audioPlayer?.isPlaying == false {
+        if (audioPlayer == nil || audioPlayer?.isPlaying == false) && SoundContinueTimer == nil {
             button_1_text = "STOP"
             button_2_text = "PLAY"
             status_text_isRed = true
             self.playSound(type:0, filename: GetLoadSoundName(stype:sound_1_select_value), fileExtension: "wav")
             //緊急時のライトOFF
             stopBlinking()
-            isBellAct = true
+            //isBellAct = true
         }
         else {
             button_1_text = "PLAY"
@@ -318,7 +336,7 @@ struct ContentView: View {
             self.playSound(type:1, filename: GetLoadSoundName(stype:sound_2_select_value), fileExtension: "wav")
             //ライトON
             startBlinking()
-            isEmerAct = true
+            //isEmerAct = true
         }
         else {
             button_1_text = "PLAY"
@@ -333,7 +351,7 @@ struct ContentView: View {
 
     //リスト選択（再生音）
     func SelectSound_1_Press(index:Int){
-        if audioPlayer?.isPlaying == true || audioPlayer_emer?.isPlaying == true {
+        if audioPlayer?.isPlaying == true || audioPlayer_emer?.isPlaying == true || SoundContinueTimer != nil {
             return
         }
         switch index {
@@ -365,31 +383,48 @@ struct ContentView: View {
             break
         }
         self.sound_1_select_value = index;
+        DataManegerSaveing()
     }
-    //リスト選択（ライト）
-    func SelectLight_1_Press(index:Int){
-        if audioPlayer?.isPlaying == true || audioPlayer_emer?.isPlaying == true {
+    //リスト選択（再生間隔）
+    func SelectIntervalPress(index:Int){
+        if audioPlayer?.isPlaying == true || audioPlayer_emer?.isPlaying == true || SoundContinueTimer != nil {
             return
         }
         switch index {
         case 0:
-            light_1_text = light_1_select_moji[0]
+            interval_text = interval_select_moji[0]
             break
         case 1:
-            light_1_text = light_1_select_moji[1]
+            interval_text = interval_select_moji[1]
             break
         case 2:
-            light_1_text = light_1_select_moji[2]
+            interval_text = interval_select_moji[2]
             break
+        case 3:
+            interval_text = interval_select_moji[3]
+            break
+        case 4:
+            interval_text = interval_select_moji[4]
+            break
+        /*
+        case 5:
+            interval_text = interval_select_moji[5]
+            break
+        case 6:
+            interval_text = interval_select_moji[6]
+            break
+         */
         default:
+            self.interval_select_value = 0;
             break
         }
-        self.light_1_select_value = index;
+        self.interval_select_value = index
+        DataManegerSaveing()
     }
     
     //リスト選択（再生音）
     func SelectSound_2_Press(index:Int){
-        if audioPlayer?.isPlaying == true || audioPlayer_emer?.isPlaying == true {
+        if audioPlayer?.isPlaying == true || audioPlayer_emer?.isPlaying == true || SoundContinueTimer != nil {
             return
         }
         switch index {
@@ -422,10 +457,11 @@ struct ContentView: View {
             break
         }
         self.sound_2_select_value = index;
+        DataManegerSaveing()
     }
     //リスト選択（ライト）
     func SelectLight_2_Press(index:Int){
-        if audioPlayer?.isPlaying == true || audioPlayer_emer?.isPlaying == true {
+        if audioPlayer?.isPlaying == true || audioPlayer_emer?.isPlaying == true || SoundContinueTimer != nil {
             return
         }
         switch index {
@@ -442,6 +478,7 @@ struct ContentView: View {
             break
         }
         self.light_2_select_value = index;
+        DataManegerSaveing()
     }
 
     //設定ボタン
@@ -449,6 +486,38 @@ struct ContentView: View {
         // 設定画面へジャンプ
     }
     
+    /*------------------------------------------------------
+        再生間隔で連続再生
+     ------------------------------------------------------*/
+    func playSoundContinue(){
+        
+        var tmp_interval:Double = 0
+        
+        //とりあえず停止
+        stopSound()
+        
+        switch interval_select_value {
+        case 0: tmp_interval = 0.0
+            break
+        case 1: tmp_interval = 5.0
+            break
+        case 2: tmp_interval = 10.0
+            break
+        case 3: tmp_interval = 15.0
+            break
+        case 4: tmp_interval = TimeInterval.random(in: 5...15)
+            break
+        default:
+            break
+        }
+
+        isBellAct = true
+        audioPlayer?.volume = Float(SoundVolume)
+        audioPlayer?.play()
+        SoundContinueTimer = Timer.scheduledTimer(withTimeInterval: tmp_interval, repeats: true) { _ in
+            self.playSoundContinue()
+        }
+    }
     /*------------------------------------------------------
         音声ロード処理
      ------------------------------------------------------*/
@@ -460,9 +529,16 @@ struct ContentView: View {
             if type == 0 {
                 do {
                     audioPlayer = try AVAudioPlayer(data: soundAsset.data, fileTypeHint: fileExtension)
-                    audioPlayer?.numberOfLoops = -1 //無限ループ再生
-                    audioPlayer?.volume = Float(SoundVolume)
-                    audioPlayer?.play()
+                    
+                    if interval_select_value == 0 {
+                        isBellAct = true
+                        audioPlayer?.numberOfLoops = -1 //無限ループ再生
+                        audioPlayer?.volume = Float(SoundVolume)
+                        audioPlayer?.play()
+                    }
+                    else {
+                        playSoundContinue()
+                    }
                 } catch {
                     print("Error: Could not play sound file.")
                 }
@@ -470,6 +546,8 @@ struct ContentView: View {
             else {
                 do {
                     audioPlayer_emer = try AVAudioPlayer(data: soundAsset.data, fileTypeHint: fileExtension)
+                    
+                    isEmerAct = true
                     audioPlayer_emer?.numberOfLoops = -1 //無限ループ再生
                     audioPlayer_emer?.volume = Float(SoundVolume)
                     audioPlayer_emer?.play()
@@ -487,15 +565,20 @@ struct ContentView: View {
         isEmerAct = false
         audioPlayer?.pause()
         audioPlayer_emer?.pause()
+        
+        SoundContinueTimer?.invalidate() // タイマーを無効化
+        SoundContinueTimer = nil
     }
 
     func setVolume() {
         audioPlayer?.volume = Float(SoundVolume)
         audioPlayer_emer?.volume = Float(SoundVolume)
+        DataManegerSaveing()
     }
     func setVolumeLevel(level: Float) {
         audioPlayer?.volume = level
         audioPlayer_emer?.volume = level
+        DataManegerSaveing()
     }
     
     /*------------------------------------------------------
@@ -592,8 +675,37 @@ struct ContentView: View {
             print("Torch could not be used")
         }
     }
+
+    /*------------------------------------------------------
+        DB処理
+     ------------------------------------------------------*/
+    func DataManegerLoading() {  //ロード
+        //通常音　選択音
+        self.sound_1_select_value = SettingsManager.shared.normalSoundSelection
+        //通常音　再生間隔
+        self.interval_select_value = SettingsManager.shared.playbackInterval
+        //緊急音　選択音
+        self.sound_2_select_value = SettingsManager.shared.emergencySoundSelection
+        //ライト　点滅間隔
+        self.light_2_select_value = SettingsManager.shared.lightBlinkingSetting
+        //音量
+        self.SoundVolume = SettingsManager.shared.volumeSetting
+    }
+    func DataManegerSaveing() {  //セーブ
+        //通常音　選択音
+        SettingsManager.shared.normalSoundSelection = self.sound_1_select_value
+        //通常音　再生間隔
+        SettingsManager.shared.playbackInterval = self.interval_select_value
+        //緊急音　選択音
+        SettingsManager.shared.emergencySoundSelection = self.sound_2_select_value
+        //ライト　点滅間隔
+        SettingsManager.shared.lightBlinkingSetting = self.light_2_select_value
+        //音量
+        SettingsManager.shared.volumeSetting = self.SoundVolume
+    }
     
 }
+
 
 
 struct ContentView_Previews: PreviewProvider {

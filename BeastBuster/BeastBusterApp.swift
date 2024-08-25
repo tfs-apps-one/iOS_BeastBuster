@@ -12,6 +12,7 @@ import AVFoundation
 struct BeastBusterApp: App {
     init (){
         setupAudioSession()
+        
     }
     var body: some Scene {
         WindowGroup {

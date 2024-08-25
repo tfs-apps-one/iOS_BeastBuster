@@ -11,6 +11,7 @@
 		FA679D782C6AF99D00DCBD72 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA679D772C6AF99D00DCBD72 /* ContentView.swift */; };
 		FA679D7A2C6AF99E00DCBD72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA679D792C6AF99E00DCBD72 /* Assets.xcassets */; };
 		FA679D7E2C6AF99E00DCBD72 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA679D7D2C6AF99E00DCBD72 /* Preview Assets.xcassets */; };
+		FAA429842C7AC06D00CF57A9 /* DataManeger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA429832C7AC06D00CF57A9 /* DataManeger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		FA679D792C6AF99E00DCBD72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA679D7B2C6AF99E00DCBD72 /* BeastBuster.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BeastBuster.entitlements; sourceTree = "<group>"; };
 		FA679D7D2C6AF99E00DCBD72 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FAA429832C7AC06D00CF57A9 /* DataManeger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManeger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 				FA4615072C6CB31700B0F5FE /* Info.plist */,
 				FA679D752C6AF99D00DCBD72 /* BeastBusterApp.swift */,
 				FA679D772C6AF99D00DCBD72 /* ContentView.swift */,
+				FAA429832C7AC06D00CF57A9 /* DataManeger.swift */,
 				FA679D792C6AF99E00DCBD72 /* Assets.xcassets */,
 				FA679D7B2C6AF99E00DCBD72 /* BeastBuster.entitlements */,
 				FA679D7C2C6AF99E00DCBD72 /* Preview Content */,
@@ -143,6 +146,7 @@
 			files = (
 				FA679D782C6AF99D00DCBD72 /* ContentView.swift in Sources */,
 				FA679D762C6AF99D00DCBD72 /* BeastBusterApp.swift in Sources */,
+				FAA429842C7AC06D00CF57A9 /* DataManeger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,7 +273,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BeastBuster/BeastBuster.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"BeastBuster/Preview Content\"";
 				DEVELOPMENT_TEAM = FD75RKYVZQ;
@@ -291,7 +295,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.2;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = tfsapps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -309,7 +313,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BeastBuster/BeastBuster.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"BeastBuster/Preview Content\"";
 				DEVELOPMENT_TEAM = FD75RKYVZQ;
@@ -331,7 +335,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.2;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = tfsapps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
