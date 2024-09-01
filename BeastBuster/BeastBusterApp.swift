@@ -7,12 +7,16 @@
 
 import SwiftUI
 import AVFoundation
+import GoogleMobileAds
+
 
 @main
 struct BeastBusterApp: App {
     init (){
         setupAudioSession()
-        
+        //広告初期化
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+
     }
     var body: some Scene {
         WindowGroup {

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVFoundation
+import GoogleMobileAds
 
 struct ContentView: View {
 
@@ -61,226 +62,33 @@ struct ContentView: View {
                 .frame(height: 10) // トップから10pxの余白
                         
             //ステータスエリア
-            HStack() {
-                Text(status_text)
-                    .bold()
-                    .font(.title3)
-                    .foregroundColor(status_text_isRed ? .red : .black)
-//                    .background(status_text_isRed ? Color.black : Color.white)
-                    .shadow(color:status_text_isRed ? Color.red : Color.gray, radius: 3, x: 5, y: 0)
-                    .frame(maxWidth: .infinity, minHeight: 80)
-                
-                /*
-                Button(action: {
-                    // ボタンがタップされた時のアクションをここに記述
-                }) {
-                    Image(systemName: "gearshape.fill")                            .resizable()
-                        .frame(width:30, height: 30)
-                        .foregroundColor(.gray) // 画像の色を変更
-                }
-                 */
-            }
-            .padding()
+            StatusArea
 
             //通常音エリア
-            VStack{
-                HStack() {
-                    Image(systemName: "bell.square.fill")
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                        .foregroundColor(isBellAct ? .cyan : .gray)
-                        .shadow(color: isBellAct ? Color.cyan : Color.gray, radius: 15, x: 0, y: 5)
-                    Spacer()
-                    
-                    Button(button_1_text) {
-                        Button_1_Press()
-                    }
-                    .font(.system(size:40))
-                    .frame(maxWidth: .infinity, minHeight: 100)
-                    .foregroundColor(.white)
-                    .background(Color.cyan)
-                    .cornerRadius(15)
-                    .shadow(color: Color.cyan, radius: 15, x: 0, y: 5)
-                    Spacer()
-                }
-                .padding(.horizontal)
-                
-                HStack{
-                    Image(systemName: "music.note.list")
-                        .padding(.leading, 10) //左端から10pxの余白
-                    
-                    Menu(sound_1_text) {
-                        Button(sound_1_select_moji[0]) {
-                            SelectSound_1_Press(index:0)
-                        }
-                        Button(sound_1_select_moji[1]) {
-                            SelectSound_1_Press(index:1)
-                        }
-                        Button(sound_1_select_moji[2]) {
-                            SelectSound_1_Press(index:2)
-                        }
-                        Button(sound_1_select_moji[3]) {
-                            SelectSound_1_Press(index:3)
-                        }
-                        Button(sound_1_select_moji[4]) {
-                            SelectSound_1_Press(index:4)
-                        }
-                        Button(sound_1_select_moji[5]) {
-                            SelectSound_1_Press(index:5)
-                        }
-                        Button(sound_1_select_moji[6]) {
-                            SelectSound_1_Press(index:6)
-                        }
-                        Button(sound_1_select_moji[7]) {
-                            SelectSound_1_Press(index:7)
-                        }
-                    }
-                    Spacer()
-                    
-                    Image(systemName: "clock.fill")
-                        .font(.title2)
-                    
-                    Menu(interval_text) {
-                        Button(interval_select_moji[0]) {
-                            SelectIntervalPress(index:0)
-                        }
-                        Button(interval_select_moji[1]) {
-                            SelectIntervalPress(index:1)
-                        }
-                        Button(interval_select_moji[2]) {
-                            SelectIntervalPress(index:2)
-                        }
-                        Button(interval_select_moji[3]) {
-                            SelectIntervalPress(index:3)
-                        }
-                        Button(interval_select_moji[4]) {
-                            SelectIntervalPress(index:4)
-                        }
-                        /*
-                        Button(interval_select_moji[5]) {
-                            SelectIntervalPress(index:5)
-                        }
-                        Button(interval_select_moji[6]) {
-                            SelectIntervalPress(index:6)
-                        }
-                        */
-                    }
-                    .padding(.trailing, 10) // 右端から10pxの余白
-                    
-                }
-                .foregroundColor((isEmerAct || isBellAct) ? .gray : .blue)
-                .bold()
-                .font(.title3)
-                .padding()
-            }
+            NormalSoundArea
             
             Spacer()
                 .frame(height: 30) // トップから10pxの余白
 
             //緊急音エリア
-            HStack() {
-                Image(systemName: "sos.circle.fill")
-                    .resizable()
-                    .frame(width: 100, height: 100)
-                    .foregroundColor(isEmerAct ? Color.red : Color.gray)
-                    .shadow(color: isEmerAct ? Color.red : Color.gray, radius: 15, x: 0, y: 5)
-                Spacer()
-
-                Button(button_2_text) {
-                    Button_2_Press()
-                }
-                .font(.system(size:40))
-                .frame(maxWidth: .infinity, minHeight: 100)
-                .foregroundColor(.white)
-                .background(Color.red)
-                .cornerRadius(15)
-                .shadow(color: Color.red, radius: 15, x: 0, y: 5)
-                Spacer()
-            }
-            .padding(.horizontal)
+            EmergencySoundArea
             
-            HStack{
-                Image(systemName: "music.note.list")
-                    .font(.title2)
-                    .padding(.leading, 10) //左端から10pxの余白
-                
-                Menu(sound_2_text) {
-                    Button(sound_2_select_moji[0]) {
-                        SelectSound_2_Press(index:0)
-                    }
-                    Button(sound_2_select_moji[1]) {
-                        SelectSound_2_Press(index:1)
-                    }
-                    Button(sound_2_select_moji[2]) {
-                        SelectSound_2_Press(index:2)
-                    }
-                    Button(sound_2_select_moji[3]) {
-                        SelectSound_2_Press(index:3)
-                    }
-                    Button(sound_2_select_moji[4]) {
-                        SelectSound_2_Press(index:4)
-                    }
-                    Button(sound_2_select_moji[5]) {
-                        SelectSound_2_Press(index:5)
-                    }
-                    Button(sound_2_select_moji[6]) {
-                        SelectSound_2_Press(index:6)
-                    }
-                    Button(sound_2_select_moji[7]) {
-                        SelectSound_2_Press(index:7)
-                    }
-                }
-                Spacer()
-                Image(systemName: "lightbulb.fill")
-                    .font(.title2)
-                
-                Menu(light_2_text) {
-                    Button(light_2_select_moji[0]) {
-                        SelectLight_2_Press(index:0)
-                    }
-                    Button(light_2_select_moji[1]) {
-                        SelectLight_2_Press(index:1)
-                    }
-                    /*
-                    Button(light_2_select_moji[2]) {
-                        SelectLight_2_Press(index:2)
-                    }
-                     */
-                }
-                .padding(.trailing, 10) // 右端から10pxの余白
-            }
-            .foregroundColor((isEmerAct || isBellAct) ? .gray : .red)
-            .bold()
-            .font(.title3)
-            .padding()
-
-            HStack{
-                Text("音量: \(Int(SoundVolume))")
-                    .padding()
-                if #available(iOS 17.0, *) {
-                    Slider(value: $SoundVolume, in: 0...15, step:1){
-                        Text("Volume")
-                    }
-                    .padding()
-                    .onChange(of: SoundVolume, setVolume)
-                } else {
-                    Slider(value: $SoundVolume, in: 0...15, step:1){
-                        Text("Volume")
-                    }
-                    .padding()
-                    .onChange(of: SoundVolume){ _ in
-                        setVolumeLevel(level: Float(SoundVolume))
-                     }
-                }
-//                .onChange(of: SoundVolume){ _ in
-//                    setVolume(level: Float(SoundVolume))
-//                }
-            }
-            .bold()
-            .font(.title3)
+            //音量エリア
+            VolumeArea
 
             //上下予約エリア確保
             Spacer()
+
+            //広告
+            BannerAdView()
+//                .frame(width: 320, height: 50)  // バナー広告のサイズ
+            .frame(width: GADAdSizeBanner.size.width, height:
+                  GADAdSizeBanner.size.height)
+
+            //上下予約エリア確保
+            Spacer()
+                .frame(height: 5)
+
         }
         .onAppear(){
             DataManegerLoading()
@@ -706,6 +514,426 @@ struct ContentView: View {
     
 }
 
+/*------------------------------------------------------
+    表示エリア
+ ------------------------------------------------------*/
+//ステータスエリア
+extension ContentView {
+
+    @ViewBuilder
+    private var StatusArea : some View {
+        HStack() {
+            Text(status_text)
+                .bold()
+                .font(.title3)
+                .foregroundColor(status_text_isRed ? .red : .black)
+//                    .background(status_text_isRed ? Color.black : Color.white)
+                .shadow(color:status_text_isRed ? Color.red : Color.gray, radius: 3, x: 5, y: 0)
+                .frame(maxWidth: .infinity, minHeight: 80)
+        }
+        .padding()
+    }
+}
+//通常音エリア
+extension ContentView {
+    
+    @ViewBuilder
+    private var NormalSoundArea : some View {
+        
+        if #available(iOS 16.0, *) {
+            
+            HStack {
+                Image(systemName: "bell.square.fill")
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .foregroundColor(isBellAct ? .cyan : .gray)
+                    .shadow(color: isBellAct ? Color.cyan : Color.gray, radius: 15, x: 0, y: 5)
+                
+                Spacer()
+                
+                Button(button_1_text) {
+                    Button_1_Press()
+                }
+                .font(.system(size:40))
+                .frame(maxWidth: .infinity, minHeight: 100)
+                .foregroundColor(.white)
+                .background(Color.cyan)
+                .cornerRadius(15)
+                .shadow(color: Color.cyan, radius: 15, x: 0, y: 5)
+                
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            HStack {
+                Image(systemName: "music.note.list")
+                    .padding(.leading, 10) //左端から10pxの余白
+                
+                Menu(sound_1_text) {
+                    Button(sound_1_select_moji[0]) {
+                        SelectSound_1_Press(index:0)
+                    }
+                    Button(sound_1_select_moji[1]) {
+                        SelectSound_1_Press(index:1)
+                    }
+                    Button(sound_1_select_moji[2]) {
+                        SelectSound_1_Press(index:2)
+                    }
+                    Button(sound_1_select_moji[3]) {
+                        SelectSound_1_Press(index:3)
+                    }
+                    Button(sound_1_select_moji[4]) {
+                        SelectSound_1_Press(index:4)
+                    }
+                    Button(sound_1_select_moji[5]) {
+                        SelectSound_1_Press(index:5)
+                    }
+                    Button(sound_1_select_moji[6]) {
+                        SelectSound_1_Press(index:6)
+                    }
+                    Button(sound_1_select_moji[7]) {
+                        SelectSound_1_Press(index:7)
+                    }
+                }
+                Spacer()
+                
+                Image(systemName: "clock.fill")
+                    .font(.title2)
+                
+                Menu(interval_text) {
+                    Button(interval_select_moji[0]) {
+                        SelectIntervalPress(index:0)
+                    }
+                    Button(interval_select_moji[1]) {
+                        SelectIntervalPress(index:1)
+                    }
+                    Button(interval_select_moji[2]) {
+                        SelectIntervalPress(index:2)
+                    }
+                    Button(interval_select_moji[3]) {
+                        SelectIntervalPress(index:3)
+                    }
+                    Button(interval_select_moji[4]) {
+                        SelectIntervalPress(index:4)
+                    }
+                }
+                .padding(.trailing, 10) // 右端から10pxの余白
+                
+            }
+            .foregroundColor((isEmerAct || isBellAct) ? .gray : .blue)
+            .bold()
+            .font(.title3)
+            .padding()
+        }
+        else{
+            
+            HStack {
+                Image(systemName: "bell.square.fill")
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .foregroundColor(isBellAct ? .blue : .gray)
+                    .shadow(color: isBellAct ? Color.blue : Color.gray, radius: 15, x: 0, y: 5)
+                
+                Spacer()
+                
+                Button(button_1_text) {
+                    Button_1_Press()
+                }
+                .font(.system(size:40))
+                .frame(maxWidth: .infinity, minHeight: 100)
+                .foregroundColor(.white)
+                .background(Color.blue)
+                .cornerRadius(15)
+                .shadow(color: Color.blue, radius: 15, x: 0, y: 5)
+                
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            HStack {
+                Image(systemName: "music.note.list")
+                    .padding(.leading, 10) //左端から10pxの余白
+                
+                Menu(sound_1_text) {
+                    Button(sound_1_select_moji[0]) {
+                        SelectSound_1_Press(index:0)
+                    }
+                    Button(sound_1_select_moji[1]) {
+                        SelectSound_1_Press(index:1)
+                    }
+                    Button(sound_1_select_moji[2]) {
+                        SelectSound_1_Press(index:2)
+                    }
+                    Button(sound_1_select_moji[3]) {
+                        SelectSound_1_Press(index:3)
+                    }
+                    Button(sound_1_select_moji[4]) {
+                        SelectSound_1_Press(index:4)
+                    }
+                    Button(sound_1_select_moji[5]) {
+                        SelectSound_1_Press(index:5)
+                    }
+                    Button(sound_1_select_moji[6]) {
+                        SelectSound_1_Press(index:6)
+                    }
+                    Button(sound_1_select_moji[7]) {
+                        SelectSound_1_Press(index:7)
+                    }
+                }
+                Spacer()
+                
+                Image(systemName: "clock.fill")
+                    .font(.title2)
+                
+                Menu(interval_text) {
+                    Button(interval_select_moji[0]) {
+                        SelectIntervalPress(index:0)
+                    }
+                    Button(interval_select_moji[1]) {
+                        SelectIntervalPress(index:1)
+                    }
+                    Button(interval_select_moji[2]) {
+                        SelectIntervalPress(index:2)
+                    }
+                    Button(interval_select_moji[3]) {
+                        SelectIntervalPress(index:3)
+                    }
+                    Button(interval_select_moji[4]) {
+                        SelectIntervalPress(index:4)
+                    }
+                }
+                .padding(.trailing, 10) // 右端から10pxの余白
+                
+            }
+            .foregroundColor((isEmerAct || isBellAct) ? .gray : .blue)
+//            .bold()
+            .font(.title3)
+            .padding()
+        }
+    }
+}
+//緊急音エリア
+extension ContentView {
+    
+    @ViewBuilder
+    private var EmergencySoundArea : some View {
+        
+        if #available(iOS 16.0, *) {
+            HStack() {
+                Image(systemName: "sos.circle.fill")
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .foregroundColor(isEmerAct ? Color.red : Color.gray)
+                    .shadow(color: isEmerAct ? Color.red : Color.gray, radius: 15, x: 0, y: 5)
+                Spacer()
+                
+                Button(button_2_text) {
+                    Button_2_Press()
+                }
+                .font(.system(size:40))
+                .frame(maxWidth: .infinity, minHeight: 100)
+                .foregroundColor(.white)
+                .background(Color.red)
+                .cornerRadius(15)
+                .shadow(color: Color.red, radius: 15, x: 0, y: 5)
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            HStack{
+                Image(systemName: "music.note.list")
+                    .font(.title2)
+                    .padding(.leading, 10) //左端から10pxの余白
+                
+                Menu(sound_2_text) {
+                    Button(sound_2_select_moji[0]) {
+                        SelectSound_2_Press(index:0)
+                    }
+                    Button(sound_2_select_moji[1]) {
+                        SelectSound_2_Press(index:1)
+                    }
+                    Button(sound_2_select_moji[2]) {
+                        SelectSound_2_Press(index:2)
+                    }
+                    Button(sound_2_select_moji[3]) {
+                        SelectSound_2_Press(index:3)
+                    }
+                    Button(sound_2_select_moji[4]) {
+                        SelectSound_2_Press(index:4)
+                    }
+                    Button(sound_2_select_moji[5]) {
+                        SelectSound_2_Press(index:5)
+                    }
+                    Button(sound_2_select_moji[6]) {
+                        SelectSound_2_Press(index:6)
+                    }
+                    Button(sound_2_select_moji[7]) {
+                        SelectSound_2_Press(index:7)
+                    }
+                }
+                Spacer()
+                Image(systemName: "lightbulb.fill")
+                    .font(.title2)
+                
+                Menu(light_2_text) {
+                    Button(light_2_select_moji[0]) {
+                        SelectLight_2_Press(index:0)
+                    }
+                    Button(light_2_select_moji[1]) {
+                        SelectLight_2_Press(index:1)
+                    }
+                    /*
+                     Button(light_2_select_moji[2]) {
+                     SelectLight_2_Press(index:2)
+                     }
+                     */
+                }
+                .padding(.trailing, 10) // 右端から10pxの余白
+            }
+            .foregroundColor((isEmerAct || isBellAct) ? .gray : .red)
+            .bold()
+            .font(.title3)
+            .padding()
+        }
+        else{
+            HStack() {
+                Image(systemName: "sos.circle.fill")
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .foregroundColor(isEmerAct ? Color.red : Color.gray)
+                    .shadow(color: isEmerAct ? Color.red : Color.gray, radius: 15, x: 0, y: 5)
+                Spacer()
+                
+                Button(button_2_text) {
+                    Button_2_Press()
+                }
+                .font(.system(size:40))
+                .frame(maxWidth: .infinity, minHeight: 100)
+                .foregroundColor(.white)
+                .background(Color.red)
+                .cornerRadius(15)
+                .shadow(color: Color.red, radius: 15, x: 0, y: 5)
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            HStack{
+                Image(systemName: "music.note.list")
+                    .font(.title2)
+                    .padding(.leading, 10) //左端から10pxの余白
+                
+                Menu(sound_2_text) {
+                    Button(sound_2_select_moji[0]) {
+                        SelectSound_2_Press(index:0)
+                    }
+                    Button(sound_2_select_moji[1]) {
+                        SelectSound_2_Press(index:1)
+                    }
+                    Button(sound_2_select_moji[2]) {
+                        SelectSound_2_Press(index:2)
+                    }
+                    Button(sound_2_select_moji[3]) {
+                        SelectSound_2_Press(index:3)
+                    }
+                    Button(sound_2_select_moji[4]) {
+                        SelectSound_2_Press(index:4)
+                    }
+                    Button(sound_2_select_moji[5]) {
+                        SelectSound_2_Press(index:5)
+                    }
+                    Button(sound_2_select_moji[6]) {
+                        SelectSound_2_Press(index:6)
+                    }
+                    Button(sound_2_select_moji[7]) {
+                        SelectSound_2_Press(index:7)
+                    }
+                }
+                Spacer()
+                Image(systemName: "lightbulb.fill")
+                    .font(.title2)
+                
+                Menu(light_2_text) {
+                    Button(light_2_select_moji[0]) {
+                        SelectLight_2_Press(index:0)
+                    }
+                    Button(light_2_select_moji[1]) {
+                        SelectLight_2_Press(index:1)
+                    }
+                    /*
+                     Button(light_2_select_moji[2]) {
+                     SelectLight_2_Press(index:2)
+                     }
+                     */
+                }
+                .padding(.trailing, 10) // 右端から10pxの余白
+            }
+            .foregroundColor((isEmerAct || isBellAct) ? .gray : .red)
+ //           .bold()
+            .font(.title3)
+            .padding()
+        }
+    }
+}
+//音量エリア
+extension ContentView {
+    
+    @ViewBuilder
+    private var VolumeArea : some View {
+        if #available(iOS 16.0, *) {
+            HStack{
+                Text("音量: \(Int(SoundVolume))")
+                    .padding()
+                if #available(iOS 17.0, *) {
+                    Slider(value: $SoundVolume, in: 0...15, step:1){
+                        Text("Volume")
+                    }
+                    .padding()
+                    .onChange(of: SoundVolume, setVolume)
+                } else {
+                    Slider(value: $SoundVolume, in: 0...15, step:1){
+                        Text("Volume")
+                    }
+                    .padding()
+                    .onChange(of: SoundVolume){ _ in
+                        setVolumeLevel(level: Float(SoundVolume))
+                    }
+                }
+                //                .onChange(of: SoundVolume){ _ in
+                //                    setVolume(level: Float(SoundVolume))
+                //                }
+            }
+            .bold()
+            .font(.title3)
+        }
+        else{
+            HStack{
+                Text("音量: \(Int(SoundVolume))")
+                    .padding()
+                if #available(iOS 17.0, *) {
+                    Slider(value: $SoundVolume, in: 0...15, step:1){
+                        Text("Volume")
+                    }
+                    .padding()
+                    .onChange(of: SoundVolume, setVolume)
+                } else {
+                    Slider(value: $SoundVolume, in: 0...15, step:1){
+                        Text("Volume")
+                    }
+                    .padding()
+                    .onChange(of: SoundVolume){ _ in
+                        setVolumeLevel(level: Float(SoundVolume))
+                    }
+                }
+                //                .onChange(of: SoundVolume){ _ in
+                //                    setVolume(level: Float(SoundVolume))
+                //                }
+            }
+//            .bold()
+            .font(.title3)
+        }
+    }
+}
+
 
 
 struct ContentView_Previews: PreviewProvider {
@@ -713,3 +941,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+

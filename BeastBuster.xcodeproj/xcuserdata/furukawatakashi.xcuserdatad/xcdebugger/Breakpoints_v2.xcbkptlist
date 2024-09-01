@@ -27,8 +27,8 @@
             filePath = "BeastBuster/ContentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "530"
-            endingLineNumber = "530"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
             landmarkName = "playSound(type:filename:fileExtension:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -43,8 +43,8 @@
             filePath = "BeastBuster/ContentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "312"
-            endingLineNumber = "312"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "Button_1_Press()"
             landmarkType = "7">
          </BreakpointContent>
@@ -59,8 +59,8 @@
             filePath = "BeastBuster/ContentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "513"
-            endingLineNumber = "513"
+            startingLineNumber = "321"
+            endingLineNumber = "321"
             landmarkName = "playSoundContinue()"
             landmarkType = "7">
          </BreakpointContent>
@@ -75,8 +75,8 @@
             filePath = "BeastBuster/ContentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "684"
-            endingLineNumber = "684"
+            startingLineNumber = "492"
+            endingLineNumber = "492"
             landmarkName = "DataManegerLoading()"
             landmarkType = "7">
          </BreakpointContent>
@@ -91,8 +91,8 @@
             filePath = "BeastBuster/ContentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "696"
-            endingLineNumber = "696"
+            startingLineNumber = "504"
+            endingLineNumber = "504"
             landmarkName = "DataManegerSaveing()"
             landmarkType = "7">
          </BreakpointContent>
@@ -107,8 +107,8 @@
             filePath = "BeastBuster/ContentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "287"
-            endingLineNumber = "287"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -123,8 +123,8 @@
             filePath = "BeastBuster/ContentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "497"
-            endingLineNumber = "497"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
             landmarkName = "playSoundContinue()"
             landmarkType = "7">
          </BreakpointContent>
@@ -139,8 +139,8 @@
             filePath = "BeastBuster/ContentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "322"
-            endingLineNumber = "322"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "Button_1_Press()"
             landmarkType = "7">
          </BreakpointContent>
@@ -155,8 +155,8 @@
             filePath = "BeastBuster/ContentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "311"
-            endingLineNumber = "311"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "Button_1_Press()"
             landmarkType = "7">
          </BreakpointContent>
