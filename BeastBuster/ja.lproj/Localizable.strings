@@ -1,0 +1,40 @@
+/* 
+  Localizable.strings
+  BeastBuster
+
+  Created by 古川貴史 on 2024/09/02.
+  
+*/
+
+"status_playing" = "＊＊注意＊＊ アプリを閉じても再生は継続します。停止する場合は「STOP」をタップして下さい。";
+"status_pausing" = "通常音 or 緊急音を選択して「PLAY」をタップして下さい。";
+"volume_title" = "音量:";
+
+"sound_bell_1" = "通常音: 鈴音1";
+"sound_bell_2" = "通常音: 鈴音2";
+"sound_bell_3" = "通常音: 鈴音3";
+"sound_thunder_1" = "通常音: 雷鳴1";
+"sound_thunder_2" = "通常音: 雷鳴2";
+"sound_thunder_3" = "通常音: 雷鳴3";
+"sound_radio" = "通常音: ラジオ";
+"sound_firecrackers" = "通常音: 爆竹";
+"e_sound_bell_1" = "緊急音: 鈴音1";
+"e_sound_bell_2" = "緊急音: 鈴音2";
+"e_sound_bell_3" = "緊急音: 鈴音3";
+"e_sound_thunder_1" = "緊急音: 雷鳴1";
+"e_sound_thunder_2" = "緊急音: 雷鳴2";
+"e_sound_thunder_3" = "緊急音: 雷鳴3";
+"e_sound_radio" = "緊急音: ラジオ";
+"e_sound_firecrackers" = "緊急音: 爆竹";
+
+"interval_0" = "間隔: 0秒";
+"interval_5" = "間隔: 5秒";
+"interval_10" = "間隔: 10秒";
+"interval_15" = "間隔: 15秒";
+"interval_random" = "ランダム";
+
+"light_OFF" = "OFF";
+"light_Flashing" = "ON(点滅)";
+
+
+

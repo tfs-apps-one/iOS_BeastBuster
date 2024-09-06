@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  BeastBuster
+
+  Created by 古川貴史 on 2024/09/06.
+  
+*/
+CFBundleName = "熊鈴（鈴音、雷鳴音、ライト通知）";
+CFBundleDisplayName = "熊鈴（鈴音、雷鳴音、ライト通知）";

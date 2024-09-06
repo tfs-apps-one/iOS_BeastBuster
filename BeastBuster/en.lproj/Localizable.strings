@@ -1,0 +1,40 @@
+/* 
+  Localizable.strings
+  BeastBuster
+
+  Created by 古川貴史 on 2024/09/02.
+  
+*/
+
+"status_playing" = "!! CAUTION !! Playback will continue even if you close the app. To stop playback, tap [STOP].";
+"status_pausing" = "Select [Bell sound] or [SOS sound] and tap [PLAY].";
+"volume_title" = "Volume:";
+
+"sound_bell_1" = "bell 1";
+"sound_bell_2" = "bell 2";
+"sound_bell_3" = "bell 3";
+"sound_thunder_1" = "thunder 1";
+"sound_thunder_2" = "thunder 2";
+"sound_thunder_3" = "thunder 3";
+"sound_radio" = "radio";
+"sound_firecrackers" = "firecrackers";
+"e_sound_bell_1" = "bell 1";
+"e_sound_bell_2" = "bell 2";
+"e_sound_bell_3" = "bell 3";
+"e_sound_thunder_1" = "thunder 1";
+"e_sound_thunder_2" = "thunder 2";
+"e_sound_thunder_3" = "thunder 3";
+"e_sound_radio" = "radio";
+"e_sound_firecrackers" = "firecrackers";
+
+"interval_0" = "interval:0s";
+"interval_5" = "interval:5s";
+"interval_10" = "interval:10s";
+"interval_15" = "interval:15s";
+"interval_random" = "random(5~15s)";
+
+"light_OFF" = "OFF";
+"light_Flashing" = "Flashing";
+
+
+

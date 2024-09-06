@@ -18,28 +18,70 @@ struct ContentView: View {
     @State var button_1_text = "PLAY"
     @State var button_2_text = "PLAY"
     
-    @State var sound_1_text = "通常音: 鈴音1"
+    @State var sound_1_text = "通常音: ---"
     @State var sound_1_select_value:Int = SettingsManager.shared.normalSoundSelection
+
+    #if true
+    var sound_1_select_moji = [
+        NSLocalizedString("sound_bell_1", comment: ""),
+        NSLocalizedString("sound_bell_2", comment: ""),
+        NSLocalizedString("sound_bell_3", comment: ""),
+        NSLocalizedString("sound_thunder_1", comment: ""),
+        NSLocalizedString("sound_thunder_2", comment: ""),
+        NSLocalizedString("sound_thunder_3", comment: ""),
+        NSLocalizedString("sound_radio", comment: ""),
+        NSLocalizedString("sound_firecrackers", comment: ""),]
+    #else
     var sound_1_select_moji = [
         "通常音: 鈴音1","通常音: 鈴音2","通常音: 鈴音3",
         "通常音: 雷鳴1","通常音: 雷鳴2","通常音: 雷鳴3",
         "通常音: ラジオ","通常音: 爆竹"]
-
+    #endif
+    
     @State var interval_text = "再生間隔"
     @State var interval_select_value:Int = SettingsManager.shared.playbackInterval
+    #if true
+    var interval_select_moji = [
+        NSLocalizedString("interval_0", comment: ""),
+        NSLocalizedString("interval_5", comment: ""),
+        NSLocalizedString("interval_10", comment: ""),
+        NSLocalizedString("interval_15", comment: ""),
+        NSLocalizedString("interval_random", comment: "")]
+    #else
     var interval_select_moji = ["間隔: 0秒", "間隔: 5秒","間隔: 10秒","間隔: 15秒","ランダム"]
-
-    @State var sound_2_text = "緊急音: 雷鳴1"
+    #endif
+    
+    @State var sound_2_text = "緊急音: ---"
     @State var sound_2_select_value:Int = SettingsManager.shared.emergencySoundSelection
+    #if true
+    var sound_2_select_moji = [
+        NSLocalizedString("e_sound_bell_1", comment: ""),
+        NSLocalizedString("e_sound_bell_2", comment: ""),
+        NSLocalizedString("e_sound_bell_3", comment: ""),
+        NSLocalizedString("e_sound_thunder_1", comment: ""),
+        NSLocalizedString("e_sound_thunder_2", comment: ""),
+        NSLocalizedString("e_sound_thunder_3", comment: ""),
+        NSLocalizedString("e_sound_radio", comment: ""),
+        NSLocalizedString("e_sound_firecrackers", comment: ""),]
+    #else
     var sound_2_select_moji = [
         "緊急音: 鈴音1","緊急音: 鈴音2","緊急音: 鈴音3",
         "緊急音: 雷鳴1","緊急音: 雷鳴2","緊急音: 雷鳴3",
         "緊急音: ラジオ","緊急音: 爆竹"]
-
+    #endif
+    
     @State var light_2_text = "OFF"
     @State var light_2_select_value:Int = SettingsManager.shared.lightBlinkingSetting
+    #if true
+    var light_2_select_moji = [
+        NSLocalizedString("light_OFF", comment: ""),
+        NSLocalizedString("light_Flashing", comment: "")
+    ]
+    #else
     var light_2_select_moji = ["OFF","ON(点滅)"]
-
+    #endif
+    
+    
     @State private var SoundVolume:Double = SettingsManager.shared.volumeSetting
 
     //音声プレイヤー
@@ -99,10 +141,11 @@ struct ContentView: View {
     func setStatusArea() {
         if (audioPlayer != nil && audioPlayer?.isPlaying == true) ||
             (audioPlayer_emer != nil && audioPlayer_emer?.isPlaying == true) {
-            status_text = "＊＊注意＊＊ アプリを閉じても再生は継続します。停止する場合は「STOP」をタップして下さい。"
-        }
+            status_text = NSLocalizedString("status_playing", comment: "")
+         }
         else {
-            status_text = "通常音 or 緊急音を選択して「PLAY」をタップして下さい。"
+            //status_text = "通常音 or 緊急音を選択して「PLAY」をタップして下さい。"
+            status_text = NSLocalizedString("status_pausing", comment: "")
         }
         
         sound_1_text = sound_1_select_moji[sound_1_select_value]
@@ -879,19 +922,21 @@ extension ContentView {
     
     @ViewBuilder
     private var VolumeArea : some View {
+         let vol_tmp = NSLocalizedString("volume_title", comment: "")
+
         if #available(iOS 16.0, *) {
             HStack{
-                Text("音量: \(Int(SoundVolume))")
+                Text(vol_tmp + "\(Int(SoundVolume))")
                     .padding()
                 if #available(iOS 17.0, *) {
                     Slider(value: $SoundVolume, in: 0...15, step:1){
-                        Text("Volume")
+                        //Text("Volume")
                     }
                     .padding()
                     .onChange(of: SoundVolume, setVolume)
                 } else {
                     Slider(value: $SoundVolume, in: 0...15, step:1){
-                        Text("Volume")
+                        //Text("Volume")
                     }
                     .padding()
                     .onChange(of: SoundVolume){ _ in
@@ -907,17 +952,19 @@ extension ContentView {
         }
         else{
             HStack{
-                Text("音量: \(Int(SoundVolume))")
+                Image(systemName: "speaker.wave.2.circle.fill")
+                    .font(.title)
+                Text(vol_tmp + "\(Int(SoundVolume))")
                     .padding()
                 if #available(iOS 17.0, *) {
                     Slider(value: $SoundVolume, in: 0...15, step:1){
-                        Text("Volume")
+                        //Text("Volume")
                     }
                     .padding()
                     .onChange(of: SoundVolume, setVolume)
                 } else {
                     Slider(value: $SoundVolume, in: 0...15, step:1){
-                        Text("Volume")
+                        //Text("Volume")
                     }
                     .padding()
                     .onChange(of: SoundVolume){ _ in

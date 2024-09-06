@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  BeastBuster
+
+  Created by 古川貴史 on 2024/09/06.
+  
+*/
+CFBundleName = "Bear bell (+Thunder sound)";
+CFBundleDisplayName = "Bear bell (+Thunder sound)";
