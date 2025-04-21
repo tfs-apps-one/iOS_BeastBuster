@@ -20,7 +20,10 @@ struct ContentView: View {
     
     @State var sound_1_text = "通常音: ---"
     @State var sound_1_select_value:Int = SettingsManager.shared.normalSoundSelection
-
+    
+    var full_ad_mess = NSLocalizedString("Full_Ad", comment: "")
+    @State var stop_count_value:Int = SettingsManager.shared.StopCountSetting
+    
     #if true
     var sound_1_select_moji = [
         NSLocalizedString("sound_bell_1", comment: ""),
@@ -93,51 +96,117 @@ struct ContentView: View {
     @State private var blinkTimer: Timer? // 点滅のためのタイマーを管理
     @State private var SoundContinueTimer: Timer?   //連続再生のためのタイマーを管理
     
+    
+    @State private var showToast = false
+    @State private var interstitial: GADInterstitialAd?
+    
     /*------------------------------------------------------
         メイン画面
      ------------------------------------------------------*/
     var body: some View {
+        ZStack{
+            
+            VStack {
+                //上下余白エリア確保
+                Spacer()
+                    .frame(height: 10) // トップから10pxの余白
                 
-        VStack {
-            //上下余白エリア確保
-            Spacer()
-                .frame(height: 10) // トップから10pxの余白
-                        
-            //ステータスエリア
-            StatusArea
-
-            //通常音エリア
-            NormalSoundArea
-            
-            Spacer()
-                .frame(height: 30) // トップから10pxの余白
-
-            //緊急音エリア
-            EmergencySoundArea
-            
-            //音量エリア
-            VolumeArea
-
-            //上下予約エリア確保
-            Spacer()
-
-            //広告
-            BannerAdView()
-//                .frame(width: 320, height: 50)  // バナー広告のサイズ
-            .frame(width: GADAdSizeBanner.size.width, height:
-                  GADAdSizeBanner.size.height)
-
-            //上下予約エリア確保
-            Spacer()
-                .frame(height: 5)
-
+                //ステータスエリア
+                StatusArea
+                
+                //通常音エリア
+                NormalSoundArea
+                
+                Spacer()
+                    .frame(height: 30) // トップから10pxの余白
+                
+                //緊急音エリア
+                EmergencySoundArea
+                
+                //音量エリア
+                VolumeArea
+                
+                //上下予約エリア確保
+                Spacer()
+                
+                //広告
+                BannerAdView()
+                //                .frame(width: 320, height: 50)  // バナー広告のサイズ
+                    .frame(width: GADAdSizeBanner.size.width, height:
+                            GADAdSizeBanner.size.height)
+                
+                //上下予約エリア確保
+                Spacer()
+                    .frame(height: 5)
+                
+            }
+            .onAppear(){
+                DataManegerLoading()
+                setStatusArea()
+            }
+            if showToast {
+                VStack {
+                    Spacer()
+                    Text(full_ad_mess)
+                        .padding()
+                        .background(Color.black.opacity(0.6))
+                        .foregroundColor(.white)
+                        .cornerRadius(15)
+                        .padding(.bottom, 100)
+                }
+                .transition(.opacity)
+                .animation(.easeInOut, value: showToast)
+            }
         }
-        .onAppear(){
-            DataManegerLoading()
-            setStatusArea()
+        .onAppear {
+            loadInterstitialAd()
         }
     }
-        
+     
+    /*-------------------------------------------------------
+        全面広告表示
+     --------------------------------------------------------*/
+    // インタースティシャル広告のロード
+    func loadInterstitialAd() {
+//        let ad_id:String = "ca-app-pub-3940256099942544/1033173712"; //テスト
+        let ad_id:String = "ca-app-pub-4924620089567925/5487594966"; //本番
+
+        let request = GADRequest()
+        GADInterstitialAd.load(withAdUnitID:ad_id, request: request) { ad, error in
+            if let error = error {
+                print("広告読み込み失敗: \(error.localizedDescription)")
+                return
+            }
+            interstitial = ad
+        }
+    }
+    // インタースティシャル広告の表示
+    func showInterstitialAd() {
+        if let ad = interstitial, let root = UIApplication.shared.windows.first?.rootViewController {
+            ad.present(fromRootViewController: root)
+            loadInterstitialAd() // 再ロード
+        } else {
+            print("インタースティシャル広告がまだ読み込まれていません")
+            loadInterstitialAd()
+        }
+    }
+    func StopCountUp() {
+        //全面広告処理
+        stop_count_value += 1
+        if stop_count_value == 8 {
+            showToast = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                showToast = false
+            }
+        }
+        if stop_count_value >= 10 {
+            showInterstitialAd()
+            stop_count_value = 0
+        }
+        DataManegerSaveing()
+    }
+    
+    
     func setStatusArea() {
         if (audioPlayer != nil && audioPlayer?.isPlaying == true) ||
             (audioPlayer_emer != nil && audioPlayer_emer?.isPlaying == true) {
@@ -390,6 +459,7 @@ struct ContentView: View {
                     else {
                         playSoundContinue()
                     }
+                    StopCountUp()
                 } catch {
                     print("Error: Could not play sound file.")
                 }
@@ -402,6 +472,8 @@ struct ContentView: View {
                     audioPlayer_emer?.numberOfLoops = -1 //無限ループ再生
                     audioPlayer_emer?.volume = Float(SoundVolume)
                     audioPlayer_emer?.play()
+                    
+                    StopCountUp()
                 } catch {
                     print("Error: Could not play sound file.")
                 }
@@ -541,6 +613,8 @@ struct ContentView: View {
         self.light_2_select_value = SettingsManager.shared.lightBlinkingSetting
         //音量
         self.SoundVolume = SettingsManager.shared.volumeSetting
+        //ストップカウント
+        self.stop_count_value = SettingsManager.shared.StopCountSetting
     }
     func DataManegerSaveing() {  //セーブ
         //通常音　選択音
@@ -553,6 +627,8 @@ struct ContentView: View {
         SettingsManager.shared.lightBlinkingSetting = self.light_2_select_value
         //音量
         SettingsManager.shared.volumeSetting = self.SoundVolume
+        //ストップカウント
+        SettingsManager.shared.StopCountSetting = self.stop_count_value
     }
     
 }

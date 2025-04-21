@@ -16,7 +16,8 @@ class SettingsManager {
     private let emergencySoundKey = "emergencySoundKey"
     private let lightBlinkingKey = "lightBlinkingKey"
     private let volumeSettingKey = "volumeSettingKey"
-    
+    private let StopCountKey = "StopCountKey"
+
     var normalSoundSelection: Int {
         get {
             return UserDefaults.standard.integer(forKey: normalSoundKey)
@@ -61,4 +62,14 @@ class SettingsManager {
             UserDefaults.standard.set(newValue, forKey: volumeSettingKey)
         }
     }
+    
+    var StopCountSetting: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: StopCountKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: StopCountKey)
+        }
+    }
+
 }
