@@ -18,6 +18,9 @@
 "sound_thunder_3" = "通常音: 雷鳴3";
 "sound_radio" = "通常音: ラジオ";
 "sound_firecrackers" = "通常音: 爆竹";
+"sound_wolf" = "通常音: 狼遠吠え";
+"sound_pet_bottle" = "通常音: PETﾎﾞﾄﾙ";
+
 "e_sound_bell_1" = "緊急音: 鈴音1";
 "e_sound_bell_2" = "緊急音: 鈴音2";
 "e_sound_bell_3" = "緊急音: 鈴音3";
@@ -26,6 +29,8 @@
 "e_sound_thunder_3" = "緊急音: 雷鳴3";
 "e_sound_radio" = "緊急音: ラジオ";
 "e_sound_firecrackers" = "緊急音: 爆竹";
+"e_sound_wolf" = "緊急音: 狼遠吠え";
+"e_sound_pet_bottle" = "緊急音: PETﾎﾞﾄﾙ";
 
 "interval_0" = "間隔: 0秒";
 "interval_5" = "間隔: 5秒";

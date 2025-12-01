@@ -18,6 +18,9 @@
 "sound_thunder_3" = "thunder 3";
 "sound_radio" = "radio";
 "sound_firecrackers" = "firecrackers";
+"sound_wolf" = "wolf";
+"sound_pet_bottle" = "PET bottle";
+
 "e_sound_bell_1" = "bell 1";
 "e_sound_bell_2" = "bell 2";
 "e_sound_bell_3" = "bell 3";
@@ -26,6 +29,8 @@
 "e_sound_thunder_3" = "thunder 3";
 "e_sound_radio" = "radio";
 "e_sound_firecrackers" = "firecrackers";
+"e_sound_wolf" = "wolf";
+"e_sound_pet_bottle" = "PET bottle";
 
 "interval_0" = "interval:0s";
 "interval_5" = "interval:5s";

@@ -33,7 +33,9 @@ struct ContentView: View {
         NSLocalizedString("sound_thunder_2", comment: ""),
         NSLocalizedString("sound_thunder_3", comment: ""),
         NSLocalizedString("sound_radio", comment: ""),
-        NSLocalizedString("sound_firecrackers", comment: ""),]
+        NSLocalizedString("sound_firecrackers", comment: ""),
+        NSLocalizedString("sound_wolf", comment: ""),
+        NSLocalizedString("sound_pet_bottle", comment: ""),]
     #else
     var sound_1_select_moji = [
         "通常音: 鈴音1","通常音: 鈴音2","通常音: 鈴音3",
@@ -65,7 +67,9 @@ struct ContentView: View {
         NSLocalizedString("e_sound_thunder_2", comment: ""),
         NSLocalizedString("e_sound_thunder_3", comment: ""),
         NSLocalizedString("e_sound_radio", comment: ""),
-        NSLocalizedString("e_sound_firecrackers", comment: ""),]
+        NSLocalizedString("e_sound_firecrackers", comment: ""),
+        NSLocalizedString("e_sound_wolf", comment: ""),
+        NSLocalizedString("e_sound_pet_bottle", comment: ""),]
     #else
     var sound_2_select_moji = [
         "緊急音: 鈴音1","緊急音: 鈴音2","緊急音: 鈴音3",
@@ -299,6 +303,13 @@ struct ContentView: View {
         case 7:
             sound_1_text = sound_1_select_moji[7]
             break
+        case 8:
+            sound_1_text = sound_1_select_moji[8]
+            break
+        case 9:
+            sound_1_text = sound_1_select_moji[9]
+            break
+
         default:
             break
         }
@@ -371,6 +382,12 @@ struct ContentView: View {
             break
         case 7:
             sound_2_text = sound_2_select_moji[7]
+            break
+        case 8:
+            sound_2_text = sound_2_select_moji[8]
+            break
+        case 9:
+            sound_2_text = sound_2_select_moji[9]
             break
 
         default:
@@ -526,6 +543,10 @@ struct ContentView: View {
         case 6: tmp_name = "radio"
             break
         case 7: tmp_name = "firecracker"
+            break
+        case 8: tmp_name = "wolf"
+            break
+        case 9: tmp_name = "pet_bottle"
             break
         default:
             tmp_name = ""
@@ -713,6 +734,12 @@ extension ContentView {
                     Button(sound_1_select_moji[7]) {
                         SelectSound_1_Press(index:7)
                     }
+                    Button(sound_1_select_moji[8]) {
+                        SelectSound_1_Press(index:8)
+                    }
+                    Button(sound_1_select_moji[9]) {
+                        SelectSound_1_Press(index:9)
+                    }
                 }
                 Spacer()
                 
@@ -797,6 +824,12 @@ extension ContentView {
                     }
                     Button(sound_1_select_moji[7]) {
                         SelectSound_1_Press(index:7)
+                    }
+                    Button(sound_1_select_moji[8]) {
+                        SelectSound_1_Press(index:8)
+                    }
+                    Button(sound_1_select_moji[9]) {
+                        SelectSound_1_Press(index:9)
                     }
                 }
                 Spacer()
@@ -889,6 +922,12 @@ extension ContentView {
                     Button(sound_2_select_moji[7]) {
                         SelectSound_2_Press(index:7)
                     }
+                    Button(sound_2_select_moji[8]) {
+                        SelectSound_2_Press(index:8)
+                    }
+                    Button(sound_2_select_moji[9]) {
+                        SelectSound_2_Press(index:9)
+                    }
                 }
                 Spacer()
                 Image(systemName: "lightbulb.fill")
@@ -965,6 +1004,12 @@ extension ContentView {
                     }
                     Button(sound_2_select_moji[7]) {
                         SelectSound_2_Press(index:7)
+                    }
+                    Button(sound_2_select_moji[8]) {
+                        SelectSound_2_Press(index:8)
+                    }
+                    Button(sound_2_select_moji[9]) {
+                        SelectSound_2_Press(index:9)
                     }
                 }
                 Spacer()
